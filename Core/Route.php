@@ -4,21 +4,21 @@ use Core\Env;
 
 class Route implements Env
 {
-	public static function routeController($controller, $method)
+	public static function routeController($controller, $method, $request = null)
 	{
 		try {
-			return self::routeConstruction($controller, $method, null);
+			return self::routeConstruction($controller, $method, $request);
 		} catch (Exception $e) {
 			die('Excepción capturada: '.$e->getMessage()."\n");
 		}
 	}
 
-	private static function routeConstruction($class,$method,$get)
+	private static function routeConstruction($class,$method,$request = null)
 	{
 		try {
 			self::requestOfView($class);
 			$instantiatedClass = new $class;
-			call_user_func_array([$instantiatedClass,$method],[$get]); 
+			call_user_func_array([$instantiatedClass,$method],[$request]); 
 		} catch (Exception $e) {
 			die('Excepción capturada: '.$e->getMessage()."\n");
 		}

@@ -13,9 +13,9 @@ $app->get('/human', function () {
     Route::routeController('HumanController', 'index');
 });
 // POST ROUTES //
-$app->post('/human/store', function () {
+$app->post('/human/store', function () use ($app) {
 	authenticate();
-    Route::routeController('HumanController', 'store');
+    Route::routeController('HumanController', 'store', $app->request()->getBody());
 });
 
 // START APP //

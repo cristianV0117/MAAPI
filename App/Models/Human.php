@@ -2,8 +2,24 @@
 namespace App\Models;
 class Human
 {
-	public static function humanModel()
+
+	private $data = array();
+
+	protected $type;
+
+	protected $age;
+	
+	public function __set($name, $value){
+        $this->data[$name] = $value;
+	}
+	
+	public function __get($name){
+        return $this->data[$name];
+    }
+
+	public function saveHuman()
 	{
-		echo "i'm a human in model";
+		print_r($this->type);
+		print_r($this->age);
 	}
 }
