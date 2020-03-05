@@ -1,5 +1,5 @@
 <?php
-namespace Config\DataBase;
+namespace Config;
 use Config\DataBase\Env;
 use Config\System;
 abstract class Conexion
@@ -30,5 +30,7 @@ abstract class Conexion
 			die("Excepcion Capturada: " . $e->getMessage() . "\n");
 		}
 	}
+
+	abstract protected function consultQuery($query);
 }
 

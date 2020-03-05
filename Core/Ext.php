@@ -7,4 +7,9 @@ trait Ext
     {
         return json_decode($request, true);
     }
+
+    public static function JSONencode($request)
+    {
+        return json_encode($request);
+    }
 }

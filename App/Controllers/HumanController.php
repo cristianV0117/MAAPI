@@ -6,7 +6,7 @@ class HumanController extends Human
 
 	public function index()
 	{
-		echo 'HUMAN!';
+		$this->allHuman();
 	}
 
 	public function store($request)
