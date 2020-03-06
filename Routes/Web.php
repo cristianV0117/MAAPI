@@ -22,7 +22,6 @@ $app->post('/human/store', function () use ($app) {
 $app->run();
 
 
-
 // VALIDATOR KEY //
 
 function authenticate()
