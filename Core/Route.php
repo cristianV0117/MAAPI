@@ -1,8 +1,7 @@
 <?php
 namespace Core;
-use Core\Env;
 
-class Route implements Env
+class Route
 {
 	public static function routeController($controller, $method, $request = null)
 	{

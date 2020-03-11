@@ -9,11 +9,11 @@ $app = new \Slim\Slim();
 $app->get('/', function (){
 	echo 'INDEX';
 });
-$app->get('/human', function () {
+$app->get('/humans', function () {
     Route::routeController('HumanController', 'index');
 });
 // POST ROUTES //
-$app->post('/human/store', function () use ($app) {
+$app->post('/humans/store', function () use ($app) {
 	authenticate();
     Route::routeController('HumanController', 'store', $app->request()->getBody());
 });

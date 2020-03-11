@@ -3,7 +3,7 @@ use App\Models\Human;
 class HumanController extends Human
 {
 	use Core\Ext;
-
+	
 	public function index()
 	{
 		$this->allHuman();

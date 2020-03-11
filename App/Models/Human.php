@@ -1,12 +1,10 @@
 <?php
 namespace App\Models;
+use Core\Query;
 
-use Core\PrepareQuery as Query;
-
-class Human
+abstract class Human extends Query
 {
-
-	private $human = array();
+	private $DB;
 
 	private $data = array();
 
@@ -24,15 +22,19 @@ class Human
         return $this->data[$name];
 	}
 	
-	public function allHuman()
+	protected function allHuman()
 	{
 		echo 'humans';
 	}
 
-	public function saveHuman()
+	protected function saveHuman()
 	{
-		print_r($this->type);
-		echo "\n";
-		print_r($this->age);
+		$this->DB = new Query();
+		$this->DB->table('humans')
+		->insert([
+				'tipo'  => $this->type,
+				'edad'  => $this->age
+			]
+		);
 	}
 }
