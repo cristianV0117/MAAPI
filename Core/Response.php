@@ -3,13 +3,10 @@ namespace Core;
 
 class Response
 {
-    public static function responseData($message, $statusCode)
+    public static function responseData($response, $statusCode)
     {
         try {
             $app = \Slim\Slim::getInstance();
-            $response = array();
-            $response["error"] = true;
-            $response["message"] = $message;
             self::echoResponse($statusCode, $response);
         } catch (Exception $e) {
             die('Excepción capturada: '.$e->getMessage()."\n");

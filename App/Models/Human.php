@@ -11,6 +11,11 @@ abstract class Human extends Query
 	protected $type;
 
 	protected $age;
+
+	public function __construct()
+	{
+		$this->DB = new Query();
+	}
 	
 	public function __set($name, $value)
 	{
@@ -24,17 +29,15 @@ abstract class Human extends Query
 	
 	protected function allHuman()
 	{
-		echo 'humans';
-	}
+		$this->DB->table('humans')->select('*')->get();
+	} 
 
 	protected function saveHuman()
 	{
-		$this->DB = new Query();
-		$this->DB->table('humans')
-		->insert([
+		$this->DB->table('humans')->insert([
 				'tipo'  => $this->type,
 				'edad'  => $this->age
 			]
-		);
+		)->save();
 	}
 }

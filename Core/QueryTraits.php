@@ -19,7 +19,6 @@ trait QueryTraits
                 $tmpValues .= "'$value'" . ",";
             }
         }
-
         $fieldValue = substr($temporal, 0, -1);
         $valueField = substr($tmpValues, 0, -1);
         $fieldValue = "(".$fieldValue.")";

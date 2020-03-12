@@ -1,6 +1,10 @@
 <?php
+
 use App\Models\Human;
-class HumanController extends Human
+
+use App\Interfaces\HumanRequestInterface;
+
+class HumanController extends Human implements HumanRequestInterface
 {
 	use Core\Ext;
 	
@@ -15,5 +19,10 @@ class HumanController extends Human
 		$this->type = $post['tipo'];
 		$this->age  = $post['edad'];
 		$this->saveHuman();
+	}
+
+	public function humanReuqestValidation()
+	{
+		
 	}
 }
