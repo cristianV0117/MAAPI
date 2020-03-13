@@ -33,4 +33,15 @@ trait QueryTraits
         });
         return $arrayWalk;
     }
+
+    function constructionMethodWhere($start,$delimiting,$final)
+    {
+        if (is_numeric($final)) {
+			$final = $final;
+        } else {
+			$final = "'$final'";
+        }
+        
+        return $start ." ".$delimiting." ".$final;
+    }
 }

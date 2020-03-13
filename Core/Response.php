@@ -3,11 +3,11 @@ namespace Core;
 
 class Response
 {
-    public static function responseData($response, $statusCode)
+    public static function responseData($response)
     {
         try {
             $app = \Slim\Slim::getInstance();
-            self::echoResponse($statusCode, $response);
+            self::echoResponse($response['status'], $response);
         } catch (Exception $e) {
             die('Excepción capturada: '.$e->getMessage()."\n");
         }

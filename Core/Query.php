@@ -5,8 +5,6 @@ use Core\ConstructQuery as Construct;
 
 use Core\PrepareQuery;
 
-use Core\Response;
-
 class Query extends Construct
 {
     private $execute;
@@ -31,17 +29,28 @@ class Query extends Construct
         return $this;
     }
 
+    public function delete()
+    {
+        $this->execute = Construct::methodDelete();
+        return $this;
+    }
+
+    public function where($start,$delimiting = null,$final)
+    {
+        Construct::methodWhere($start,$delimiting,$final);
+        return $this;
+    }
+
     public function save()
     {
-        $this->executeQUERY($this->execute);
-        return $this;
+        return $this->executeQUERY($this->execute);
     }
 
     public function get()
     {
-        $this->executeQUERY($this->get);
+        return $this->executeQUERY($this->get);
     }
-
+    
     private function executeQUERY($query)
     {
         $DB = new PrepareQuery;
@@ -49,13 +58,13 @@ class Query extends Construct
         if ($return['resultado']->execute()) {
             $data = $return['resultado']->fetchAll(\PDO::FETCH_CLASS);
             if(empty($data)) {
-                Response::responseData(array('error' => false, 'message' => 'Registrado correctamente','ultimoID' => $return['ultimoID']->lastInsertId()), 201);
+                return (array('error' => false, 'message' => 'OK', 'ultimoID' => $return['ultimoID']->lastInsertId(), 'status' => 201));
             }
             else {
-                Response::responseData(array('error' => false, 'message' => $data), 200);
+                return (array('error' => false, 'message' => $data, 'status' => 200));
             }
         } else {
-            Response::responseData(array('error' => true, 'message' => $return['resultado']->errorInfo()), 400);
+            return (array('error' => true, 'message' => $return['resultado']->errorInfo(), 'status' => 400));
         }
     }
 }

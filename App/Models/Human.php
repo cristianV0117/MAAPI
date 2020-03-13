@@ -8,6 +8,8 @@ abstract class Human extends Query
 
 	private $data = array();
 
+	protected $id;
+
 	protected $type;
 
 	protected $age;
@@ -29,15 +31,20 @@ abstract class Human extends Query
 	
 	protected function allHuman()
 	{
-		$this->DB->table('humans')->select('*')->get();
-	} 
+		return $this->DB->table('humans')->select('*')->get();
+	}
 
 	protected function saveHuman()
 	{
-		$this->DB->table('humans')->insert([
+		return $this->DB->table('humans')->insert([
 				'tipo'  => $this->type,
 				'edad'  => $this->age
 			]
 		)->save();
+	}
+
+	protected function deleteHuman()
+	{
+		return $this->DB->table('humans')->where('id', '=', $this->id)->delete()->save();
 	}
 }
