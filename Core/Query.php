@@ -35,6 +35,12 @@ class Query extends Construct
         return $this;
     }
 
+    public function update($array = [])
+    {
+        $this->execute = Construct::methodUpdate($array);
+        return $this;
+    }
+
     public function where($start,$delimiting = null,$final)
     {
         Construct::methodWhere($start,$delimiting,$final);
@@ -56,12 +62,12 @@ class Query extends Construct
         $DB = new PrepareQuery;
         $return = $DB->consultQuery($query);
         if ($return['resultado']->execute()) {
-            $data = $return['resultado']->fetchAll(\PDO::FETCH_CLASS);
+            $data = $return['resultado']->fetchAll(\PDO::FETCH_ASSOC);
             if(empty($data)) {
-                return (array('error' => false, 'message' => 'OK', 'ultimoID' => $return['ultimoID']->lastInsertId(), 'status' => 201));
+                return (array('error' => false, 'message' => 'OK', 'last_id' => $return['ultimoID']->lastInsertId()));
             }
             else {
-                return (array('error' => false, 'message' => $data, 'status' => 200));
+                return (array('error' => false, 'message' => $data));
             }
         } else {
             return (array('error' => true, 'message' => $return['resultado']->errorInfo(), 'status' => 400));

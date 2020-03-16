@@ -3,6 +3,7 @@ namespace Routes;
 use Core\Route;
 use Config\System;
 use Core\Response;
+
 $app = new \Slim\Slim();
 
 // GET ROUTES //
@@ -23,7 +24,10 @@ $app->delete('/humans/:id', function ($id){
 	Route::routeController('HumanController', 'destory', $id);
 });
 // UPDATE ROUTES //
-
+$app->put('/humans/:id', function ($id) use ($app) {
+	authenticate();
+	Route::routeController('HumanController', 'update', $app->request()->getBody(), $id);
+});
 // START APP //
 $app->run();
 // VALIDATOR KEY //

@@ -12,7 +12,7 @@ class HumanController extends Human implements HumanRequestInterface
 	
 	public function index()
 	{
-		Response::responseData($this->allHuman());
+		Response::responseData(self::statusCode($this->allHuman(), 200));
 	}
 
 	public function store($request)
@@ -20,13 +20,22 @@ class HumanController extends Human implements HumanRequestInterface
 		$post = self::JSONdecode($request);
 		$this->type = $post['tipo'];
 		$this->age  = $post['edad'];
-		Response::responseData($this->saveHuman());
+		Response::responseData(self::statusCode($this->saveHuman(), 201));
+	}
+
+	public function update($request, $id)
+	{
+		$post = self::JSONdecode($request);
+		$this->id 	= $id;
+		$this->type = $post['tipo'];
+		$this->age  = $post['edad'];
+		Response::responseData(self::statusCode($this->editHuman(), 200));
 	}
 
 	public function destory($request)
 	{
 		$this->id = $request;
-		Response::responseData($this->deleteHuman());
+		Response::responseData(self::statusCode($this->deleteHuman(), 200));
 	}
 
 	public function humanReuqestValidation()

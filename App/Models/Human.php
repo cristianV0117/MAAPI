@@ -2,7 +2,7 @@
 namespace App\Models;
 use Core\Query;
 
-abstract class Human extends Query
+abstract class Human
 {
 	private $DB;
 
@@ -16,7 +16,7 @@ abstract class Human extends Query
 
 	public function __construct()
 	{
-		$this->DB = new Query();
+		$this->DB = new Query;
 	}
 	
 	public function __set($name, $value)
@@ -28,6 +28,7 @@ abstract class Human extends Query
 	{
         return $this->data[$name];
 	}
+
 	
 	protected function allHuman()
 	{
@@ -37,10 +38,17 @@ abstract class Human extends Query
 	protected function saveHuman()
 	{
 		return $this->DB->table('humans')->insert([
-				'tipo'  => $this->type,
-				'edad'  => $this->age
-			]
-		)->save();
+			'tipo'  => $this->type,
+			'edad'  => $this->age
+		])->save();
+	}
+
+	protected function editHuman()
+	{
+		return $this->DB->table('humans')->where('id', '=' , $this->id)->update([
+			'tipo' => $this->type,
+			'edad' => $this->age
+		])->save();
 	}
 
 	protected function deleteHuman()

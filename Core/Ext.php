@@ -12,4 +12,9 @@ trait Ext
     {
         return json_encode($request);
     }
+
+    public static function statusCode($array, $status)
+    {
+        return array_merge($array, array('status' => $status));
+    }
 }

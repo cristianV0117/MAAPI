@@ -4,6 +4,7 @@ namespace Core;
 
 trait QueryTraits
 {
+
     function constructionValueField($arrayInsert)
     {
         $scapeArray = self::escapeArrayData($arrayInsert);
@@ -24,6 +25,23 @@ trait QueryTraits
         $fieldValue = "(".$fieldValue.")";
         $valueField = "(".$valueField.")";
         return array($fieldValue, $valueField);
+    }
+
+    function constructionValueFieldUpdate($arrayUpdate)
+    {
+        $scapeArray = self::escapeArrayData($arrayUpdate);
+        $temporal = '';
+		foreach ($scapeArray as $key => $value) {
+			if (is_numeric($value)) {
+				$temporal .= $key . " = ". $value . ",";
+			} elseif ($value == 'CURRENT_TIMESTAMP') {
+				$temporal .= $key . " = ". $value . ",";
+			} else {
+				$temporal .= $key . " = ". "'$value'" . ",";
+			}
+		}
+		$campo = substr($temporal, 0, -1);
+		return $campo;
     }
 
     function escapeArrayData($arrayWalk)

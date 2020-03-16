@@ -16,7 +16,13 @@ abstract class ConstructQuery
 
     private static $delete     = " DELETE ";
 
+    private static $update     = " UPDATE ";
+
     private static $where      = " WHERE ";
+
+    private static $and        = " AND ";
+
+    private static $set        = " SET ";
 
     private static $conwhere;
 
@@ -45,6 +51,11 @@ abstract class ConstructQuery
         return self::constructSQL('delete');
     }
 
+    protected static function methodUpdate($arrayUpdate = [])
+    {
+        return self::constructSQL('update', self::constructionValueFieldUpdate($arrayUpdate));
+    }
+
     protected static function methodWhere($start,$delimiting,$final)
     {
         self::$conwhere = self::constructionMethodWhere($start,$delimiting,$final);
@@ -56,11 +67,13 @@ abstract class ConstructQuery
             case 'insert':
                 return self::$insertInto . self::$table . $request[0] . self::$values . $request[1];
                 break;
-            case 'select':
-                return self::$selection . self::$columnSelect . self::$from . self::$table;
-                break;
+            case 'update':
+                return self::$update . self::$table . self::$set . $request . self::$where . self::$conwhere;
             case 'delete':
                 return self::$delete . self::$from . self::$table . self::$where . self::$conwhere;
+                break;
+            case 'select':
+                return self::$selection . self::$columnSelect . self::$from . self::$table;
                 break;
             default:
                 throw new Exception("No hay tipo definido de consulta");
