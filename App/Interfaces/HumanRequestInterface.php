@@ -4,5 +4,7 @@ namespace App\Interfaces;
 
 interface HumanRequestInterface
 {
-    public function humanReuqestValidation();
+    public function humanReuqestValidation($request);
+
+    public function noDataInRequestValidation();
 }

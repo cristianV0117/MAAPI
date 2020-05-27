@@ -10,6 +10,8 @@ abstract class Human
 
 	protected $id;
 
+	protected $name;
+
 	protected $type;
 
 	protected $age;
@@ -32,12 +34,16 @@ abstract class Human
 	
 	protected function allHuman()
 	{
-		return $this->DB->table('humans')->select('*')->get();
+		return $this->DB->table('humans')->join([
+			["animals", "animals.human_id", "=", "humans.id"],
+			["insects", "insects.human_id", "=", "humans.id"]
+		])->select('animals.nombre, insects.nombre as nombre_insects ')->get();
 	}
 
 	protected function saveHuman()
 	{
 		return $this->DB->table('humans')->insert([
+			'nombre'=> $this->name,
 			'tipo'  => $this->type,
 			'edad'  => $this->age
 		])->save();
@@ -46,11 +52,12 @@ abstract class Human
 	protected function editHuman()
 	{
 		return $this->DB->table('humans')->where('id', '=' , $this->id)->update([
-			'tipo' => $this->type,
-			'edad' => $this->age
+			'nombre'=> $this->name,
+			'tipo'  => $this->type,
+			'edad'  => $this->age
 		])->save();
 	}
-
+	
 	protected function deleteHuman()
 	{
 		return $this->DB->table('humans')->where('id', '=', $this->id)->delete()->save();

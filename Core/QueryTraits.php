@@ -62,4 +62,77 @@ trait QueryTraits
         
         return $start ." ".$delimiting." ".$final;
     }
+
+    function constructionMethodAndWhere($array)
+    {
+        $result = '';
+        for ($i=0; $i < count($array); $i++) { 
+			if (is_numeric($array[$i][2])) {
+                $array[$i][2] = $array[$i][2];
+			} else {
+				$valor = $array[$i][2];
+				$array[$i][2] = "'$valor'";
+			}
+        }
+		$new = '';
+		if (count($array) === 1) {	
+			foreach ($array[0] as $value) {
+				$result .= $value . " ";
+			}
+		}
+		for ($i=0; $i < count($array); $i++) { 
+			$new .= $array[$i][0] . $array[$i][1] . $array[$i][2] . ' AND ';	
+		}
+		$result = substr($new,0,-4);
+        return $result;
+    }
+
+    function constructionMethodOrWhere($array)
+    {
+
+        $result = '';
+        for ($i=0; $i < count($array); $i++) { 
+		    if (is_numeric($array[$i][2])) {
+				$array[$i][2] = $array[$i][2];
+			} else {
+				$valor = $array[$i][2];
+				$array[$i][2] = "'$valor'";		
+			}
+		}
+		$new = '';
+		if (count($array) === 1) {	
+			foreach ($array[0] as $value) {
+				$result .= $value . " ";
+			}
+		}
+		for ($i=0; $i < count($array); $i++) { 
+			$new .= $array[$i][0] . $array[$i][1] . $array[$i][2] . ' OR ';
+		}
+		$result = substr($new,0,-4);
+		return $result;
+    }
+
+    function constructionMethodJoin($array)
+    {
+        $new = '';
+        if (count($array) === 1) {
+            return array($array[0][0], $array[0][1] . " " . $array[0][2] . " " . $array[0][3]);
+        } else {
+            $a = 0;
+			for ($i=0; $i < count($array); $i++) { 
+			    if ($i == 0) {
+				    $a = $a - 1;
+                }
+                $a++;
+                if ($a == 0) {
+                    $a = $a + 1;
+                }
+                $new .=  $array[$i][1] ." ".$array[$i][2]." ". $array[$i][3]."," . ' INNER JOIN ' . $array[isset($array[$a]) ? $a : $a - 1][0] . " ON ";
+            }
+			$new = explode(",",$new);
+			array_pop($new);
+			$resultado = implode(" ", $new);											
+            return array($array[0][0], $resultado);
+        }
+    }
 }

@@ -2,14 +2,14 @@
 
 namespace Core;
 
-class Validations
+trait Validations
 {
     public static function ifThereIsData($data,$delimiting)
     {
-        $var = '';
+		$var = '';
 		foreach ($delimiting as $key => $value) {	
-			if (!empty($datos[$key])) {
-					$var .= 'lleno';
+			if (!empty($data[$key])) {
+				$var .= 'lleno';
 			} else {
 				$var .= 'vacio@';
 			    break;

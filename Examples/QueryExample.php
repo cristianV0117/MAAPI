@@ -14,73 +14,61 @@ class Query extends Construct
     public function table($tabla)
     {
         Construct::identifyTable($tabla);
-        return $this;
+        //return $this;
     }
     
     public function insert($array = [])
     {
         $this->execute = Construct::methodInsert($array);
-        return $this;
+        //return $this;
     }
 
     public function select($column)
     {
         $this->get = Construct::methodSelect($column);
-        return $this;
+        //return $this;
     }
 
     public function delete()
     {
         $this->execute = Construct::methodDelete();
-        return $this;
+        //return $this;
     }
 
     public function update($array = [])
     {
         $this->execute = Construct::methodUpdate($array);
-        return $this;
+        //return $this;
     }
 
     public function where($start,$delimiting = null,$final)
     {
         Construct::methodWhere($start,$delimiting,$final);
-        return $this;
+        //return $this;
     }
 
     public function andWhere($array = [])
     {
-        Construct::methodAndWhere($array);
-        return $this;
+        $this->get = Construct::methodAndWhere($array);
+        //return $this;
     }
 
     public function orWhere($array = [])
     {
-        Construct::methodOrWhere($array);
-        return $this;
-    }
-
-    public function groupBy($type)
-    {
-        Construct::methodGroupBy($type);
-        return $this;
-    }
-
-    public function orderBy($type, $order)
-    {
-       Construct::methodOrderBy($type, $order);
-       return $this;
+        $this->get = Construct::methodOrWhere($array);
+        //return $this;
     }
 
     public function limit($limit)
     {
-        Construct::methodLimit($limit);
-        return $this;
+        $this->get = Construct::methodLimit($limit);
+        //return $this;
     }
 
-    public function join($array = [])
+    public function orderBy($type, $order)
     {
-        Construct::methodJoin($array);
-        return $this;
+       $this->get = Construct::methodOrderBy($type, $order);
+       //return $this;
     }
 
     public function save()
@@ -95,7 +83,7 @@ class Query extends Construct
     
     private function executeQUERY($query)
     {
-        $DB = new PrepareQuery;
+        /*$DB = new PrepareQuery;
         $return = $DB->consultQuery($query);
         if ($return['resultado']->execute()) {
             $data = $return['resultado']->fetchAll(\PDO::FETCH_ASSOC);
@@ -107,6 +95,6 @@ class Query extends Construct
             }
         } else {
             return (array('error' => true, 'message' => $return['resultado']->errorInfo(), 'status' => 400));
-        }
+        }*/
     }
 }
